@@ -32,6 +32,8 @@ Route::get('users', 'API\UserController@getAllUsers');
 
 // Transaction routes
 Route::post('transfer', 'API\TransferController@transferMoney');
+
+// Routes to get transactions
 Route::get('transactions', 'API\TransferController@listTransactions');
 
 
