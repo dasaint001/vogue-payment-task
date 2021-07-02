@@ -13,8 +13,10 @@ use Validator;
 
 class TransferController extends Controller 
 {
+    
     public function transferMoney(Request $request) 
     { 
+        //print_r('Elijah'); exit;
         $validator = Validator::make($request->all(), [ 
             'bank' => 'required', 
             'account_number' => 'required', 
@@ -47,23 +49,25 @@ class TransferController extends Controller
             'Authorization' => 'Bearer ' . $secret_key
         ])->post(Constants::BASE . Constants::TRANSFER, $payload);
 
-        return $flutter_response;
-        //print_r($flutter_response); exit;
-
-        if($flutter_response->failed()) return response()->json([
-            'status'   => false,
-            'message'   => 'Transfer failed'
-        ], 400);
+        if($flutter_response->failed()){
+            return response()->json([
+                'status'   => false,
+                'message'   => 'Transfer failed'
+            ], 400);
+        } 
 
         if($flutter_response['status'] == 'error'){
             throw new \App\Exceptions\TransferValidationException($flutter_response['message']);
         }
+
+        $response = $flutter_response ->json();
 
         $transaction = new TransactionModel();
         $transaction->reference = $response['data']['reference'];
         $transaction->transaction_id = $response['data']['id'];
         $transaction->gateway = 'flutterwave';
         $transaction->amount = $request->amount;
+        $transaction->narration = $response['data']['narration'];
         $transaction->transaction_type = 'debit';
         $transaction->paid_at = date('Y-m-d H:i:s');
         $transaction->account_number = $response['data']['account_number'];
@@ -75,10 +79,11 @@ class TransferController extends Controller
         return response()->json([
             'status'    => true,
             'data'  => [
-                'transaction'   => $transaction
+                'response' => $response,
+                'transaction'=> $transaction
             ]
         ]);
-       
+        
     }
 
     public function listTransactions(Request $request) 

@@ -19,21 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // User's login route
-Route::post('login', 'API\UserController@userLogin');
+Route::post('/login', 'API\UserController@userLogin');
 
 // User register route
-Route::post('register', 'API\UserController@registerUser');
+Route::post('/register', 'API\UserController@registerUser');
 
 // Get single user
-Route::get('users/{id}', 'API\UserController@getUser');
+Route::get('/users/{id}', 'API\UserController@getUser');
 
 //Get all users
-Route::get('users', 'API\UserController@getAllUsers');
+Route::get('/users', 'API\UserController@getAllUsers');
 
 // Transaction routes
-Route::post('transfer', 'API\TransferController@transferMoney');
+Route::post('/transfer', 'API\TransferController@transferMoney');
 
 // Routes to get transactions
-Route::get('transactions', 'API\TransferController@listTransactions');
+Route::get('/transactions', 'API\TransferController@listTransactions');
 
 
