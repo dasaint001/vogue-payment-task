@@ -88,7 +88,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function getAllUsers(Request $request, $id) 
+    public function getAllUsers(Request $request) 
     { 
         $users = User::all();
 
