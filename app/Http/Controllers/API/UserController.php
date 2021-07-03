@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller; 
 use App\Models\User; 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth; 
 use Validator;
 
@@ -60,7 +61,7 @@ class UserController extends Controller
 
         $user = User::create($input); 
 
-        $success['token'] =  $user->createToken('MyApp')->accessToken; 
+        $success['token'] =  Str::random(64); 
         $success['name'] =  $user->name;
 
         $data = [
