@@ -30,10 +30,13 @@ Route::get('/users/{id}', 'API\UserController@getUser');
 //Get all users
 Route::get('/users', 'API\UserController@getAllUsers');
 
-// Transaction routes
+// Transfer routes
 Route::post('/transfer', 'API\TransferController@transferMoney');
 
 // Routes to get transactions
 Route::get('/transactions', 'API\TransferController@listTransactions');
+
+// Search through transactions
+Route::get('/transaction', 'API\TransferController@searchTransactions');
 
 

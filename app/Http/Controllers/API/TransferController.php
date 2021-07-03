@@ -103,6 +103,33 @@ class TransferController extends Controller
         ], 200);
     }
 
+    public function searchTransactions(Request $request) 
+    { 
+        $validator = Validator::make($request->all(), [ 
+            'reference_id' => 'required'
+        ]);
+
+        if ($validator->fails()) { 
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()
+            ], 401);            
+        }
+        $transaction = TransactionModel::where('reference', $request->reference_id)->first();
+
+        if(!$transaction){
+            return response()->json([
+                'status' => false,
+                'message' => 'Transaction not found'
+            ], 404); 
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => $transaction
+        ], 200);
+    }
+
     public static function generateRandomNumber($length) {
         $result = '';
         for($i = 0; $i < $length; $i++) {
