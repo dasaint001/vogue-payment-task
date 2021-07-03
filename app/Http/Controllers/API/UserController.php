@@ -23,8 +23,7 @@ class UserController extends Controller
           
             return response()->json([
                 'status' => true,
-                'user_token' => $success,
-                'message' => 'User logged in'
+                'message' => 'logged in'
             ], 200); 
         } else{  
             return response()->json([
@@ -61,12 +60,19 @@ class UserController extends Controller
 
         $user = User::create($input); 
 
-        $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+        $success['token'] =  $user->createToken('MyApp')->accessToken; 
         $success['name'] =  $user->name;
+
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'token' => $success['token']
+        ];
 
         return response()->json([
             'status' => true,
-            'message' => 'Registeration successful'
+            'message' => 'Registeration successful',
+            'data' => $data
         ], 200);
        
     }
