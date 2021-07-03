@@ -46,7 +46,7 @@ class TransferController extends Controller
         ];
 
         $flutter_response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $secret_key
+            'Authorization' => 'Bearer ' . 'FLWSECK_TEST-0ae450091f968bab8b9ae054f03a76fc-X'//$secret_key
         ])->post(Constants::BASE . Constants::TRANSFER, $payload);
 
         if($flutter_response->failed()){
